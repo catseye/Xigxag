@@ -1,23 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- encoding: UTF-8 -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>The Xigxag Automaton</title>
-
-<style type="text/css">
-code {
-  background: pink;
-  border: 1px solid;
-  padding-right: 1px;
-  margin-left: 1px;
-}
-span.qed {
-  color: white;
-  background: black;
-  padding: 0px;
-}
-</style>
-
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>The Xigxag Automaton</title>
+  <!-- begin html doc dynamic markup -->
+  <script type="text/javascript" src="/contrib/jquery-1.6.4.min.js"></script>
+  <script type="text/javascript" src="/scripts/documentation.js"></script>
+  <!-- end html doc dynamic markup -->
+  <style type="text/css">
+  code {
+    background: pink;
+    border: 1px solid;
+    padding-right: 1px;
+    margin-left: 1px;
+  }
+  span.qed {
+    color: white;
+    background: black;
+    padding: 0px;
+  }
+  </style>
 </head>
 <body>
 
@@ -108,7 +111,7 @@ almost everywhere</strong>.</p>
 be gentle.  Anyway, you can just skip it if you don't dig proofs.)</p>
 
 <p>To show this, I'm going to split the theorem into two parts: Xigxag has growth almost everywhere,
-and the magnitude of that growth is always &Omega;(2<sup>n</sup>) (where &Omega;(X) denotes a
+and the magnitude of that growth is always Ω(2<sup>n</sup>) (where Ω(X) denotes a
 lower bound on the order of X.)  And each of these will be split into several lemmas.
 But first, we need a couple of more definitions, just to make sure we're not relying too much
 on intuition.</p>
@@ -123,7 +126,7 @@ odd length, is the symbol which has an equal number of symbols on either side of
 and for configurations of even length, is the gap between symbols which 
 has an equal number of symbols on either side of it.</p>
 
-<p><u>Lemma 1</u>.  A minimal expander of length <var>n</var> is given by:</p>
+<p><em>Lemma 1</em>.  A minimal expander of length <var>n</var> is given by:</p>
 <ul>
 <li>when <var>n</var> is even: <code>&lt;</code><sup><var>n</var>/2</sup><code>&gt;</code><sup><var>n</var>/2</sup>
 </li>
@@ -133,7 +136,7 @@ where <var>x</var> can be either <code>&lt;</code> or <code>&gt;</code>.
 </ul>
 <p>In addition, this minimal expander of length <var>n</var> is unique (up to the symbol represented by <var>x</var>).</p>
 
-<p><u>Proof</u>:  For any symbol left of centre, there will be more symbols on its right
+<p><em>Proof</em>:  For any symbol left of centre, there will be more symbols on its right
 than on its left.  Therefore if some symbol left of centre is a <code>&gt;</code>, more
 symbols will be copied into the next-configuration than if it were a <code>&lt;</code>.
 So in a minimal expander, this symbol must be a <code>&lt;</code>.
@@ -143,11 +146,11 @@ The symbol at the centre
 (which only exists when <var>n</var> is odd) is inconsequential; since there are an equal
 number of symbols on either side of it, changing it will not affect the expansion.  <span class="qed">QED</span></p>
 
-<p><u>Lemma 2a</u>.  If some configuration <var>s</var> exhibits growth and
+<p><em>Lemma 2a</em>.  If some configuration <var>s</var> exhibits growth and
 <var>s</var> contains at least one <code>&lt;</code>,
 then the configuration <code>&lt;</code><var>s</var> also exhibits growth.</p>
 
-<p><u>Proof</u>:  Say <var>s</var> has length <var>n</var> and the next-configuration
+<p><em>Proof</em>:  Say <var>s</var> has length <var>n</var> and the next-configuration
 of <var>s</var> has length <var>n</var> + <var>m</var> for some positive <var>m</var>.
 Then the next-configuration of <code>&lt;</code><var>s</var> has length of at least <var>n</var> + <var>m</var>
 because every symbol in <var>s</var> still has at least as many symbols on either
@@ -158,16 +161,16 @@ new <code>&lt;</code> prefix and will copy it as well; so the next-configuration
 of <code>&lt;</code><var>s</var> has length of at least <var>n</var> + <var>m</var> + 1.
 Therefore <code>&lt;</code><var>s</var> exhibits growth.  <span class="qed">QED</span></p>
 
-<p><u>Lemma 2b</u>.  If some configuration <var>s</var> exhibits growth and
+<p><em>Lemma 2b</em>.  If some configuration <var>s</var> exhibits growth and
 <var>s</var> contains at least one <code>&gt;</code>,
 then the configuration <var>s</var><code>&gt;</code> also exhibits growth.</p>
 
-<p><u>Proof</u>: Mirror-image of argument for Lemma 2a.  <span class="qed">QED</span>
+<p><em>Proof</em>: Mirror-image of argument for Lemma 2a.  <span class="qed">QED</span></p>
 
-<p><u>Lemma 3</u>.  If some minimal expander of length <var>n</var> exhibits growth,
+<p><em>Lemma 3</em>.  If some minimal expander of length <var>n</var> exhibits growth,
 then so does the minimal expander of length <var>n</var> + 1.</p>
 
-<p><u>Proof</u>: Given the minimal expander <var>s</var> of length <var>n</var>, we can form a
+<p><em>Proof</em>: Given the minimal expander <var>s</var> of length <var>n</var>, we can form a
 minimal expander of length <var>n</var> + 1 by:</p>
 
 <ul>
@@ -176,19 +179,19 @@ appending a <code>&gt;</code> to it (to obtain <var>s</var><code>&gt;</code>);</
 <li>if it contains more <code>&gt;</code> symbols than <code>&lt;</code> symbols:
 prefixing a <code>&lt;</code> to it (to obtain <code>&lt;</code><var>s</var>);</li>
 <li>if it contains the same number of <code>&gt;</code> symbols as <code>&lt;</code> symbols:
-either appending a <code>&gt;</code> to it or prefixing a <code>&lt;</code> to it.
+either appending a <code>&gt;</code> to it or prefixing a <code>&lt;</code> to it.</li>
 </ul>
 
 <p>These cases can easily be checked against Lemma 1.  Further, from Lemmas 2a and 2b
 we know that appending <code>&gt;</code> or prefixing <code>&lt;</code> to a configuration
 that exhibits growth will produce a new configuration that also exhibits growth.  Thus,
 if some minimal expander of length <var>n</var> exhibits growth,
-then so does the minimal expander of length <var>n</var> + 1.  <span class="qed">QED</a></p>
+then so does the minimal expander of length <var>n</var> + 1.  <span class="qed">QED</span></p>
 
-<p><u>Lemma 4</u>.  All but a finite number of initial Xigxag configurations
+<p><em>Lemma 4</em>.  All but a finite number of initial Xigxag configurations
 exhibit growth.</p>
 
-<p><u>Proof</u>:  By induction.  Note that the Xigxag configuration
+<p><em>Proof</em>:  By induction.  Note that the Xigxag configuration
 <code>&lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt;</code>
 is a minimal expander of length 8
 (by Lemma 1.)  Note also that it has a next-configuration of
@@ -207,29 +210,29 @@ configurations of length <var>n</var> must exhibit growth (since a minimal
 expander expands the least of all configurations of its size.)  Therefore all Xigxag configurations
 of length 8 or greater exhibit growth, and the only Xigxag configurations that do
 not exhibit growth must have length less than 8.  There are clearly only a finite number
-of such configurations.  <span class="qed">QED</a></p>
+of such configurations.  <span class="qed">QED</span></p>
 
-<p><u>Lemma 5</u>.  For all integers <var>n</var> &ge; 1, 4&middot;2<sup><var>n</var>+1</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup>.
+<p><em>Lemma 5</em>.  For all integers <var>n</var> ≥ 1, 4·2<sup><var>n</var>+1</sup> ≥ 6·2<sup><var>n</var>-1</sup>.
 (The relevance of this will become apparent later.)</p>
 
-<p><u>Proof</u>:  By induction.  For <var>n</var> = 1,
-4&middot;2<sup><var>n</var>+1</sup> = 4&middot;2<sup>2</sup> = 16
-&ge;
-6&middot;2<sup><var>n</var>-1</sup> = 6&middot;2<sup>1</sup> = 12.
+<p><em>Proof</em>:  By induction.  For <var>n</var> = 1,
+4·2<sup><var>n</var>+1</sup> = 4·2<sup>2</sup> = 16
+≥
+6·2<sup><var>n</var>-1</sup> = 6·2<sup>1</sup> = 12.
 So the base case is proved.</p>
 
-<p>Now we wish to show 4&middot;2<sup><var>n</var>+2</sup> &ge; 6&middot;2<sup><var>n</var></sup>.
+<p>Now we wish to show 4·2<sup><var>n</var>+2</sup> ≥ 6·2<sup><var>n</var></sup>.
 Divide both sides by 2 to obtain
-2&middot;2<sup><var>n</var>+2</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup>.
-But note that 2&middot;2<sup><var>n</var>+2</sup> = 4&middot;2<sup><var>n</var>+1</sup>,
-so the expression can be restated 4&middot;2<sup><var>n</var>+1</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup>.
+2·2<sup><var>n</var>+2</sup> ≥ 6·2<sup><var>n</var>-1</sup>.
+But note that 2·2<sup><var>n</var>+2</sup> = 4·2<sup><var>n</var>+1</sup>,
+so the expression can be restated 4·2<sup><var>n</var>+1</sup> ≥ 6·2<sup><var>n</var>-1</sup>.
 But this is exactly our inductive hypothesis!  So the inductive step is proved,
-proving the lemma.  <span class="qed">QED</a></p>
+proving the lemma.  <span class="qed">QED</span></p>
 
-<p><u>Lemma 6</u>.  The length of the next-configuration of a
-minimal expander of length <var>n</var> is &Omega;(2<sup>n</sup>).</p>
+<p><em>Lemma 6</em>.  The length of the next-configuration of a
+minimal expander of length <var>n</var> is Ω(2<sup>n</sup>).</p>
 
-<p><u>Proof</u>: Let's tackle this by finding a closed-form expression T(<var>n</var>) for the
+<p><em>Proof</em>: Let's tackle this by finding a closed-form expression T(<var>n</var>) for the
 length of the next-configuration of a given minimal expander of length <var>n</var>, where <var>n</var> is even.</p>
 
 <p>(Note that we haven't shown that the next-configuration of a minimal expander
@@ -237,7 +240,7 @@ is another minimal expander.  In fact this is true, but we don't have to show it
 because, from the definition of minimal expanders, we know that any next-configuration
 of a minimal expander
 will have at least as much expansion as a minimal expander would.  That's
-also what lets us phrase the result in terms of a lower bound using &Omega;-notation.)</p>
+also what lets us phrase the result in terms of a lower bound using Ω-notation.)</p>
 
 <p>First, we find a recurrence formula.
 From Lemma 1, observe that the left half of a minimal expander
@@ -269,38 +272,38 @@ checking to confirm that it holds.
 2nd ed., by Cormen, Leiserson, Rivest, and Stein.)</p>
 
 <ul>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var>2<sup><var>n</var></sup>)<sup>2</sup>/4 -    <var>c</var>2<sup><var>n</var></sup>/2</li>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; <var>c</var><sup>2</sup>2<sup>2<var>n</var></sup>/4 -     <var>c</var>2<sup><var>n</var></sup>/2</li>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var><sup>2</sup>/4)2<sup>2<var>n</var>-2</sup> - (<var>c</var>/2)2<sup><var>n</var>-1</sup></li>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var><sup>2</sup>/4)2&middot;2<sup><var>n</var>-1</sup> - (<var>c</var>/2)2<sup><var>n</var>-1</sup></li>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; ((<var>c</var><sup>2</sup>/4)2 - (<var>c</var>/2))2<sup><var>n</var>-1</sup></li>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var><sup>2</sup>/2 - <var>c</var>/2)2<sup><var>n</var>-1</sup></li>
-<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var>(<var>c</var> - 1)/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ (<var>c</var>2<sup><var>n</var></sup>)<sup>2</sup>/4 -    <var>c</var>2<sup><var>n</var></sup>/2</li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ <var>c</var><sup>2</sup>2<sup>2<var>n</var></sup>/4 -     <var>c</var>2<sup><var>n</var></sup>/2</li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ (<var>c</var><sup>2</sup>/4)2<sup>2<var>n</var>-2</sup> - (<var>c</var>/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ (<var>c</var><sup>2</sup>/4)2·2<sup><var>n</var>-1</sup> - (<var>c</var>/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ ((<var>c</var><sup>2</sup>/4)2 - (<var>c</var>/2))2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ (<var>c</var><sup>2</sup>/2 - <var>c</var>/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> ≥ (<var>c</var>(<var>c</var> - 1)/2)2<sup><var>n</var>-1</sup></li>
 </ul>
 
-<p>So T(<var>n</var>) &ge; <var>c</var>2<sup><var>n</var></sup> holds <em>provided</em> we
-can find some <var>c</var> that satisfies both T(1) = 8 and <var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var>(<var>c</var> - 1)/2)2<sup><var>n</var>-1</sup>
-for all <var>n</var> &ge; 1.  First we examine T(1):</p>
+<p>So T(<var>n</var>) ≥ <var>c</var>2<sup><var>n</var></sup> holds <em>provided</em> we
+can find some <var>c</var> that satisfies both T(1) = 8 and <var>c</var>2<sup><var>n</var>+1</sup> ≥ (<var>c</var>(<var>c</var> - 1)/2)2<sup><var>n</var>-1</sup>
+for all <var>n</var> ≥ 1.  First we examine T(1):</p>
 
 <ul>
-<li>T(<var>n</var>) &ge; <var>c</var>2<sup><var>n</var></sup></li>
-<li>T(1) &ge; <var>c</var>2<sup>1</sup></li>
-<li>8 &ge; 2&middot;<var>c</var></li>
+<li>T(<var>n</var>) ≥ <var>c</var>2<sup><var>n</var></sup></li>
+<li>T(1) ≥ <var>c</var>2<sup>1</sup></li>
+<li>8 ≥ 2·<var>c</var></li>
 </ul>
 
 <p>So let <var>c</var> = 4, and note that (<var>c</var>(<var>c</var> - 1)/2) = 6.
-Indeed, 4&middot;2<sup><var>n</var>+1</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup> is true for
-all <var>n</var> &ge; 1 by Lemma 5.  So the closed form holds.  <span class="qed">QED</a></p>
+Indeed, 4·2<sup><var>n</var>+1</sup> ≥ 6·2<sup><var>n</var>-1</sup> is true for
+all <var>n</var> ≥ 1 by Lemma 5.  So the closed form holds.  <span class="qed">QED</span></p>
 
 <p>Finally...</p>
 
-<p><u>Theorem</u>.  Xigxag has exponential growth almost everywhere.</p>
+<p><em>Theorem</em>.  Xigxag has exponential growth almost everywhere.</p>
 
-<p><u>Proof</u>: Lemma 4 and Lemma 6.  <span class="qed">QED</a></p>
+<p><em>Proof</em>: Lemma 4 and Lemma 6.  <span class="qed">QED</span></p>
 
 <p>In fact, it seems to me that there's an awful lot of wiggle room between
-4&middot;2<sup><var>n</var>+1</sup> and 6&middot;2<sup><var>n</var>-1</sup>, so I'll
-wager a guess that it's not &omega;(2<sup>n</sup>) (that is, that 
+4·2<sup><var>n</var>+1</sup> and 6·2<sup><var>n</var>-1</sup>, so I'll
+wager a guess that it's not ω(2<sup>n</sup>) (that is, that 
 the bound I've given of 2<sup>n</sup> is not tight, and can be improved upon.)</p>
 
 <p>Also, I chose 8 as the base case of the induction to keep things simple.
