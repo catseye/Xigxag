@@ -1,0 +1,368 @@
+<html>
+<head><title>The Xigxag Automaton</title>
+<style type="text/css">
+code {
+  background: pink;
+  border: 1px solid;
+  padding-right: 1px;
+  margin-left: 1px;
+}
+span.qed {
+  color: white;
+  background: black;
+  padding: 0px;
+}
+</style>
+</head>
+<body>
+
+<h1>The Xigxag Automaton</h1>
+
+<p><i>a.k.a. "Arrow Avalanche"</i><br />Chris Pressey, June 2 2007</p>
+
+<h2>Introduction</h2>
+
+<p>Xigxag is a simple automaton which exhibits exponential growth
+almost everywhere.  In other words, there are only a finite number of
+initial configurations that do not blow up exponentially in size.</p>
+
+<h2>Definition</h2>
+
+<p>A <dfn>Xigxag configuration</dfn> is a string over the
+alphabet {<code>&lt;</code>, <code>&gt;</code>}*.  So, for example,
+<code>&lt;&lt;&gt;&gt;</code> is a Xigxag configuration.  When there
+is no danger of ambiguity, I'll refer to these simply as configurations
+in this document.</p>
+
+<p>Like all automata, there is a binary relation
+between Xigxag configurations that describes how Xigxag "runs",
+which I'll call the <dfn>Xigxag transition relation</dfn>.
+The following procedure describes how the
+<dfn>next-configuration</dfn> <var>t</var> of a
+given configuration <var>s</var> can be
+obtained from <var>s</var>.</p>
+
+<p>For each symbol <var>k</var> in <var>s</var>, such that <var>s</var> = <var>l</var><var>k</var><var>r</var>
+where <var>l</var> and <var>r</var> are strings (substrings of <var>s</var>),
+</p>
+<ul>
+<li>If <var>k</var> is <code>&lt;</code>, copy <var>l</var> into <var>t</var>;</li>
+<li>Otherwise <var>k</var> is <code>&gt;</code>; copy <var>r</var> into <var>t</var>.</li>
+</ul>
+
+<p>Note that order matters in the above procedure.  In Xigxag, <var>s</var> is examined left-to-right and
+<var>t</var> is likewise constructed left-to-right.  Variations could be
+denoted with subscripts like Xigxag<sub>LR</sub> to indicate that
+<var>t</var> is rather constructed right-to-left.  However, I won't pursue such
+variations here.</p>
+
+<p>A <dfn>Xigxag execution sequence</dfn>, or simply a <dfn>run</dfn>, for a given <dfn>initial-configuration</dfn> <var>s</var>
+is the sequence of configurations starting with <var>s</var> and closed under successive
+applications of the transition relation.
+Every execution sequences comprises a countably infinite
+number of configurations -- that is, runs never stop.
+They may, however, be ultimately periodic -- that is, they may reach some
+configuration to which they always return (a "fixed point.")
+But, as I'll attempt to show later, the number of initial
+configurations that lead to this is finite (and in fact, pretty small.)</p>
+
+<h2>Example</h2>
+
+<p>Say our initial Xigxag configuration is</p>
+
+<div><code>&gt;&lt;&lt;</code></div>
+
+<p>Examining it left-to-right, we see</p>
+
+<ul>
+<li><code>&gt;</code>, so we add <code>&lt;&lt;</code> to the next-configuration;</li>
+<li><code>&lt;</code>, so we add <code>&gt;</code>;</li>
+<li><code>&lt;</code>, so we add <code>&gt;&lt;</code>,</li>
+</ul>
+
+<p>and the next-configuration is thus</p>
+
+<div><code>&lt;&lt;&gt;&gt;&lt;</code></div>
+
+<p>Continuing in this vein, the execution sequence for this initial configuration is</p>
+
+<div>
+<code>&gt;&lt;&lt;</code><br />
+<code>&lt;&lt;&gt;&gt;&lt;</code><br />
+<code>&lt;&gt;&lt;&lt;&lt;&lt;&gt;&gt;</code><br />
+<code>&lt;&lt;&lt;&lt;&gt;&gt;&lt;&gt;&lt;&gt;&lt;&lt;&gt;&lt;&lt;&lt;&gt;&lt;&lt;&lt;&gt;</code><br />
+...</div>
+
+<h2>Investigation</h2>
+
+<p>Sure, it's simple, but I find Xigxag moderately interesting -- interesting enough to
+devote this section to proving the following property: <strong>Xigxag has exponential growth
+almost everywhere</strong>.</p>
+
+<p>(Gasp!  Mathematical rigour, in an esolang!  Say it isn't so!  Don't worry, I'll try to
+be gentle.  Anyway, you can just skip it if you don't dig proofs.)</p>
+
+<p>To show this, I'm going to split the theorem into two parts: Xigxag has growth almost everywhere,
+and the magnitude of that growth is always &Omega;(2<sup>n</sup>) (where &Omega;(X) denotes a
+lower bound on the order of X.)  And each of these will be split into several lemmas.
+But first, we need a couple of more definitions, just to make sure we're not relying too much
+on intuition.</p>
+
+<p>A configuration <var>s</var> <dfn>exhibits growth</dfn> if the length of its next-configuration <var>t</var>
+is strictly greater, i.e. if |<var>t</var>| &gt; |<var>s</var>|.  We call the value |<var>t</var>| - |<var>s</var>|
+the <dfn>expansion</dfn> of <var>s</var>.  The configuration of some length <var>n</var> that has the
+least expansion of any configuration of length <var>n</var> we call the <dfn>minimal expander of length <var>n</var></dfn>.</p>
+
+<p>The <dfn>centre of a configuration</dfn>, for configurations of
+odd length, is the symbol which has an equal number of symbols on either side of it,
+and for configurations of even length, is the gap between symbols which 
+has an equal number of symbols on either side of it.</p>
+
+<p><u>Lemma 1</u>.  A minimal expander of length <var>n</var> is given by:</p>
+<ul>
+<li>when <var>n</var> is even: <code>&lt;</code><sup><var>n</var>/2</sup><code>&gt;</code><sup><var>n</var>/2</sup>
+</li>
+<li>when <var>n</var> is odd: <code>&lt;</code><sup>floor(<var>n</var>/2)</sup><var>x</var><code>&gt;</code><sup>floor(<var>n</var>/2)</sup>
+where <var>x</var> can be either <code>&lt;</code> or <code>&gt;</code>.
+</li>
+</ul>
+<p>In addition, this minimal expander of length <var>n</var> is unique (up to the symbol represented by <var>x</var>).</p>
+
+<p><u>Proof</u>:  For any symbol left of centre, there will be more symbols on its right
+than on its left.  Therefore if some symbol left of centre is a <code>&gt;</code>, more
+symbols will be copied into the next-configuration than if it were a <code>&lt;</code>.
+So in a minimal expander, this symbol must be a <code>&lt;</code>.
+A mirror-image argument applies for symbols right of centre.  Since there is only
+one choice for these symbols, the minimal expander is unique as well.
+The symbol at the centre
+(which only exists when <var>n</var> is odd) is inconsequential; since there are an equal
+number of symbols on either side of it, changing it will not affect the expansion.  <span class="qed">QED</span></p>
+
+<p><u>Lemma 2a</u>.  If some configuration <var>s</var> exhibits growth and
+<var>s</var> contains at least one <code>&lt;</code>,
+then the configuration <code>&lt;</code><var>s</var> also exhibits growth.</p>
+
+<p><u>Proof</u>:  Say <var>s</var> has length <var>n</var> and the next-configuration
+of <var>s</var> has length <var>n</var> + <var>m</var> for some positive <var>m</var>.
+Then the next-configuration of <code>&lt;</code><var>s</var> has length of at least <var>n</var> + <var>m</var>
+because every symbol in <var>s</var> still has at least as many symbols on either
+side of it and is thus still copying substrings into the
+next-configuration that are at least as long.  In addition, one of the symbols
+in <var>s</var> is a <code>&lt;</code>; this <code>&lt;</code> will "see" the
+new <code>&lt;</code> prefix and will copy it as well; so the next-configuration
+of <code>&lt;</code><var>s</var> has length of at least <var>n</var> + <var>m</var> + 1.
+Therefore <code>&lt;</code><var>s</var> exhibits growth.  <span class="qed">QED</span></p>
+
+<p><u>Lemma 2b</u>.  If some configuration <var>s</var> exhibits growth and
+<var>s</var> contains at least one <code>&gt;</code>,
+then the configuration <var>s</var><code>&gt;</code> also exhibits growth.</p>
+
+<p><u>Proof</u>: Mirror-image of argument for Lemma 2a.  <span class="qed">QED</span>
+
+<p><u>Lemma 3</u>.  If some minimal expander of length <var>n</var> exhibits growth,
+then so does the minimal expander of length <var>n</var> + 1.</p>
+
+<p><u>Proof</u>: Given the minimal expander <var>s</var> of length <var>n</var>, we can form a
+minimal expander of length <var>n</var> + 1 by:</p>
+
+<ul>
+<li>if it contains more <code>&lt;</code> symbols than <code>&gt;</code> symbols:
+appending a <code>&gt;</code> to it (to obtain <var>s</var><code>&gt;</code>);</li>
+<li>if it contains more <code>&gt;</code> symbols than <code>&lt;</code> symbols:
+prefixing a <code>&lt;</code> to it (to obtain <code>&lt;</code><var>s</var>);</li>
+<li>if it contains the same number of <code>&gt;</code> symbols as <code>&lt;</code> symbols:
+either appending a <code>&gt;</code> to it or prefixing a <code>&lt;</code> to it.
+</ul>
+
+<p>These cases can easily be checked against Lemma 1.  Further, from Lemmas 2a and 2b
+we know that appending <code>&gt;</code> or prefixing <code>&lt;</code> to a configuration
+that exhibits growth will produce a new configuration that also exhibits growth.  Thus,
+if some minimal expander of length <var>n</var> exhibits growth,
+then so does the minimal expander of length <var>n</var> + 1.  <span class="qed">QED</a></p>
+
+<p><u>Lemma 4</u>.  All but a finite number of initial Xigxag configurations
+exhibit growth.</p>
+
+<p><u>Proof</u>:  By induction.  Note that the Xigxag configuration
+<code>&lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt;</code>
+is a minimal expander of length 8
+(by Lemma 1.)  Note also that it has a next-configuration of
+<code>&lt;&lt;&lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;</code>,
+which has a length of 12.  Clearly 12 &gt; 8, thus it exhibits growth.</p>
+
+<p>Also, we know by Lemma 3 that if a minimal configuration of length <var>n</var> exhibits growth,
+so does the minimal expander of length <var>n</var> + 1.</p>
+
+<p>So, since the minimal expander of length 8 exhibits growth, and since if a minimal expander
+of length n exhibits growth so does a minimal expander of length <var>n</var> + 1,
+all minimal expanders of length 8 or greater exhibit growth.</p>
+
+<p>In addition, if a minimal expander of length <var>n</var> exhibits growth, then all
+configurations of length <var>n</var> must exhibit growth (since a minimal
+expander expands the least of all configurations of its size.)  Therefore all Xigxag configurations
+of length 8 or greater exhibit growth, and the only Xigxag configurations that do
+not exhibit growth must have length less than 8.  There are clearly only a finite number
+of such configurations.  <span class="qed">QED</a></p>
+
+<p><u>Lemma 5</u>.  For all integers <var>n</var> &ge; 1, 4&middot;2<sup><var>n</var>+1</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup>.
+(The relevance of this will become apparent later.)</p>
+
+<p><u>Proof</u>:  By induction.  For <var>n</var> = 1,
+4&middot;2<sup><var>n</var>+1</sup> = 4&middot;2<sup>2</sup> = 16
+&ge;
+6&middot;2<sup><var>n</var>-1</sup> = 6&middot;2<sup>1</sup> = 12.
+So the base case is proved.</p>
+
+<p>Now we wish to show 4&middot;2<sup><var>n</var>+2</sup> &ge; 6&middot;2<sup><var>n</var></sup>.
+Divide both sides by 2 to obtain
+2&middot;2<sup><var>n</var>+2</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup>.
+But note that 2&middot;2<sup><var>n</var>+2</sup> = 4&middot;2<sup><var>n</var>+1</sup>,
+so the expression can be restated 4&middot;2<sup><var>n</var>+1</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup>.
+But this is exactly our inductive hypothesis!  So the inductive step is proved,
+proving the lemma.  <span class="qed">QED</a></p>
+
+<p><u>Lemma 6</u>.  The length of the next-configuration of a
+minimal expander of length <var>n</var> is &Omega;(2<sup>n</sup>).</p>
+
+<p><u>Proof</u>: Let's tackle this by finding a closed-form expression T(<var>n</var>) for the
+length of the next-configuration of a given minimal expander of length <var>n</var>, where <var>n</var> is even.</p>
+
+<p>(Note that we haven't shown that the next-configuration of a minimal expander
+is another minimal expander.  In fact this is true, but we don't have to show it
+because, from the definition of minimal expanders, we know that any next-configuration
+of a minimal expander
+will have at least as much expansion as a minimal expander would.  That's
+also what lets us phrase the result in terms of a lower bound using &Omega;-notation.)</p>
+
+<p>First, we find a recurrence formula.
+From Lemma 1, observe that the left half of a minimal expander
+consists of <var>n</var>/2 <code>&lt;</code> symbols.
+The first <code>&lt;</code> will not "see" any other symbols; the second will
+"see" exactly one other symbol (the first <code>&lt;</code>); the third will "see"
+two symbols, and so forth.  The total number of symbols "seen" by the left half will
+be the sum of the integers between 1 and <var>n</var>/2 - 1.
+The closed form for such a sequence is <var>m</var>(<var>m</var> + 1) / 2; in our case this
+works out to (<var>n</var>/2 - 1)(<var>n</var>/2) / 2.  A mirror-image argument
+applies to what the <code>&gt;</code> symbols "see" in the other half of the string,
+so we can double this to obtain (<var>n</var>/2 - 1)(<var>n</var>/2), and multiply this
+out to obtain <var>n</var><sup>2</sup>/4 - <var>n</var>/2.  So our recurrence
+formula looks like:</p>
+
+<ul>
+<li>T(1) = 8 (from our base case in Lemma 4)</li>
+<li>T(<var>n</var>+1) = T(<var>n</var>)<sup>2</sup>/4 - T(<var>n</var>)/2</li>
+</ul>
+
+<p>T(2) = T(1)<sup>2</sup>/4 - T(1)/2 = 8<sup>2</sup>/4 - 8/2 = 64/4 - 4 = 16 - 4 = 12,
+so this coincides with what we already saw in Lemma 4.</p>
+
+<p>Now we use the "substitution method": we guess that the closed form
+of this recurrence is greater than <var>c</var>2<sup><var>n</var></sup> for some
+constant <var>c</var>, and we substitute this into the recurrence formula,
+checking to confirm that it holds.
+(For more on this method, see, e.g. section 4.1 of <cite>Introduction to Algorithms</cite>,
+2nd ed., by Cormen, Leiserson, Rivest, and Stein.)</p>
+
+<ul>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var>2<sup><var>n</var></sup>)<sup>2</sup>/4 -    <var>c</var>2<sup><var>n</var></sup>/2</li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; <var>c</var><sup>2</sup>2<sup>2<var>n</var></sup>/4 -     <var>c</var>2<sup><var>n</var></sup>/2</li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var><sup>2</sup>/4)2<sup>2<var>n</var>-2</sup> - (<var>c</var>/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var><sup>2</sup>/4)2&middot;2<sup><var>n</var>-1</sup> - (<var>c</var>/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; ((<var>c</var><sup>2</sup>/4)2 - (<var>c</var>/2))2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var><sup>2</sup>/2 - <var>c</var>/2)2<sup><var>n</var>-1</sup></li>
+<li><var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var>(<var>c</var> - 1)/2)2<sup><var>n</var>-1</sup></li>
+</ul>
+
+<p>So T(<var>n</var>) &ge; <var>c</var>2<sup><var>n</var></sup> holds <em>provided</em> we
+can find some <var>c</var> that satisfies both T(1) = 8 and <var>c</var>2<sup><var>n</var>+1</sup> &ge; (<var>c</var>(<var>c</var> - 1)/2)2<sup><var>n</var>-1</sup>
+for all <var>n</var> &ge; 1.  First we examine T(1):</p>
+
+<ul>
+<li>T(<var>n</var>) &ge; <var>c</var>2<sup><var>n</var></sup></li>
+<li>T(1) &ge; <var>c</var>2<sup>1</sup></li>
+<li>8 &ge; 2&middot;<var>c</var></li>
+</ul>
+
+<p>So let <var>c</var> = 4, and note that (<var>c</var>(<var>c</var> - 1)/2) = 6.
+Indeed, 4&middot;2<sup><var>n</var>+1</sup> &ge; 6&middot;2<sup><var>n</var>-1</sup> is true for
+all <var>n</var> &ge; 1 by Lemma 5.  So the closed form holds.  <span class="qed">QED</a></p>
+
+<p>Finally...</p>
+
+<p><u>Theorem</u>.  Xigxag has exponential growth almost everywhere.</p>
+
+<p><u>Proof</u>: Lemma 4 and Lemma 6.  <span class="qed">QED</a></p>
+
+<p>In fact, it seems to me that there's an awful lot of wiggle room between
+4&middot;2<sup><var>n</var>+1</sup> and 6&middot;2<sup><var>n</var>-1</sup>, so I'll
+wager a guess that it's not &omega;(2<sup>n</sup>) (that is, that 
+the bound I've given of 2<sup>n</sup> is not tight, and can be improved upon.)</p>
+
+<p>Also, I chose 8 as the base case of the induction to keep things simple.
+In fact, after only five generations, the length-4 initial configuration <code>&lt;&gt;&gt;&lt;</code>
+balloons into a configuration of length 1,267,174.  I think all length-7 configurations
+grow exponentially as well, but there are configurations of length 6 that are stable
+(namely <code>&lt;&lt;&lt;&gt;&gt;&gt;</code>.)</p>
+
+<p>Now I'll turn my attention to something a little less easy to determine...</p>
+
+<h3>Is it Turing-complete?</h3>
+
+<p>Oh, I seriously doubt it.  But then, I seriously doubt a lot of things.
+I doubt the Kolakoski sequence is (asymptotically speaking)
+unevenly distributed; I doubt that there's some initial value from which the
+Collatz sequence fails to terminate; I doubt that P = NP.  These doubts are
+founded on intuition, however, not proof, and intuition has led me astray
+in the past.</p>
+
+<p>So, how would one go about confirming my intuition and proving that
+Xigxag isn't Turing-complete?</p>
+
+<p>For some languages, like <a href="/projects/b_juliet/">beta-Juliet</a>
+or <a href="/projects/smetana/">SMETANA</a>,
+we can say that, because every program gives rise to only a finite
+number of possible internal configurations during a run (no matter its input), and because Turing machines can take
+on an infinite number of internal configurations during a run, the language can't possibly
+be Turing-complete.  Alas, we can't say that for Xigxag, because almost all Xigxag
+"programs" (initial configurations) give rise to a countably infinite
+sequence of different configurations during an execution sequence.</p>
+
+<p>The fact that Xigxag execution never "halts" is also not helpful --
+the same is true for all cellular automata, and this hurdle is usually
+overcome by attaching a "termination predicate" to the system.  That is,
+if some configuration meets some condition (e.g. contains some substring,)
+then we consider the system to have halted.</p>
+
+<p>From this, we can formulate the <dfn>inclusion problem</dfn> for
+Xigxag: given a particular string <var>s</var> over the
+alphabet {<code>&lt;</code>, <code>&gt;</code>}*, does there exist a Xigxag execution sequence
+where <var>s</var> occurs as a substring in one of the configurations,
+but not in the initial configuration?  I suspect that if one could show
+that this problem is decidable -- or, stronger, if one could give an
+algorithm for determining what that initial configuration is -- that
+would imply that Xigxag is not Turing-complete.</p>
+
+<p>Another approach one could take is to find a very small Turing
+machine which simulates the Xigxag automaton and show that it is
+too small to be a universal Turing machine.  I haven't tried this
+in detail, but I'm skeptical because Xigxag has a lot of "nonlocal
+motion" (symbols that cause faraway substrings to be copied to
+new places that would be, on a single-tape machine, also faraway)
+which would seem to entail a lot of states/symbols.</p>
+
+<h2>Background and Implementation</h2>
+
+<p>I apparently came up with this automaton, and wrote a buggy Perl
+implementation of it, in 2001.  I also apparently didn't find it
+very interesting at the time, and shelved it.  I rediscovered my
+Perl script in 2007, debugged it, and released it into the public
+domain.  At the same time, I christened the automaton that it implements
+Xigxag, and went about proving (as you may have read above) that it
+exhibits exponential growth almost everywhere.</p>
+
+<p>Chris Pressey
+<br />June 2, 2007
+<br />Vancouver, BC, Canada</p>
+
+</body>
+</html>
