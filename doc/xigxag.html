@@ -1,5 +1,9 @@
-<html>
-<head><title>The Xigxag Automaton</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>The Xigxag Automaton</title>
+
 <style type="text/css">
 code {
   background: pink;
@@ -13,6 +17,7 @@ span.qed {
   padding: 0px;
 }
 </style>
+
 </head>
 <body>
 
@@ -60,8 +65,8 @@ variations here.</p>
 is the sequence of configurations starting with <var>s</var> and closed under successive
 applications of the transition relation.
 Every execution sequences comprises a countably infinite
-number of configurations -- that is, runs never stop.
-They may, however, be ultimately periodic -- that is, they may reach some
+number of configurations — that is, runs never stop.
+They may, however, be ultimately periodic — that is, they may reach some
 configuration to which they always return (a "fixed point.")
 But, as I'll attempt to show later, the number of initial
 configurations that lead to this is finite (and in fact, pretty small.)</p>
@@ -95,7 +100,7 @@ configurations that lead to this is finite (and in fact, pretty small.)</p>
 
 <h2>Investigation</h2>
 
-<p>Sure, it's simple, but I find Xigxag moderately interesting -- interesting enough to
+<p>Sure, it's simple, but I find Xigxag moderately interesting — interesting enough to
 devote this section to proving the following property: <strong>Xigxag has exponential growth
 almost everywhere</strong>.</p>
 
@@ -327,7 +332,7 @@ be Turing-complete.  Alas, we can't say that for Xigxag, because almost all Xigx
 "programs" (initial configurations) give rise to a countably infinite
 sequence of different configurations during an execution sequence.</p>
 
-<p>The fact that Xigxag execution never "halts" is also not helpful --
+<p>The fact that Xigxag execution never "halts" is also not helpful —
 the same is true for all cellular automata, and this hurdle is usually
 overcome by attaching a "termination predicate" to the system.  That is,
 if some configuration meets some condition (e.g. contains some substring,)
@@ -338,8 +343,8 @@ Xigxag: given a particular string <var>s</var> over the
 alphabet {<code>&lt;</code>, <code>&gt;</code>}*, does there exist a Xigxag execution sequence
 where <var>s</var> occurs as a substring in one of the configurations,
 but not in the initial configuration?  I suspect that if one could show
-that this problem is decidable -- or, stronger, if one could give an
-algorithm for determining what that initial configuration is -- that
+that this problem is decidable — or, stronger, if one could give an
+algorithm for determining what that initial configuration is — that
 would imply that Xigxag is not Turing-complete.</p>
 
 <p>Another approach one could take is to find a very small Turing
